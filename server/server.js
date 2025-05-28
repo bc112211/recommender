@@ -14,7 +14,7 @@ app.post('/generate', async (req, res) => {
       'https://api.together.xyz/v1/chat/completions', 
       {
         model: 'meta-llama/Llama-Vision-Free',
-        messages: [{ role: 'user', content: 'Suggest a fun, spontaneous activity someone could do right now. Keep it short and creative. This could be very random and try not to be basic'}],
+        messages: [{ role: 'user', content: 'Suggest a fun, spontaneous, physical activity someone could do. Keep it short and creative. This could be very random and try not to be basic. Simply give the activity'}],
         temperature: 0.9,
         max_tokens: 50,
       },

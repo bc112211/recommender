@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { Button, Box, Paper, Typography } from '@mui/material';
 
 function App() {
   const [activity, setActivity] = useState('');
@@ -11,27 +12,54 @@ function App() {
       const response = await axios.post('/generate');
       setActivity(response.data.activity);
     } catch (error) {
-      setActivity("Couldn't generate activity. Try again later.");
+      setActivity("Try again later.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-purple-200 p-4">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">Need an Idea?</h1>
-      <button
-        onClick={getActivity}
-        className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl shadow-md"
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        flexDirection: 'column',
+      }}
+    >
+      <Paper
+        elevation={4}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+          p: 4,
+          width: '500px',
+        }}
       >
-        {loading ? "Thinking..." : "Surprise Me 🎲"}
-      </button>
-      {activity && (
-        <div className="mt-6 bg-white p-6 rounded-xl shadow-lg max-w-md text-center">
-          <p className="text-lg text-gray-700">{activity}</p>
-        </div>
-      )}
-    </div>
+        <Typography variant='h4'>
+          Need something to do?
+        </Typography>
+          <Button 
+            variant="outlined"
+            size='large'
+            sx={{ mt: 2}}
+            onClick={getActivity}>
+              {loading ? "Thinking..." : "Surprise Me"}
+          </Button>
+          {activity && (
+            <Typography
+              variant='h6'
+              sx={{ mt: 2, color: 'text.secondary' }}
+            >
+              {activity}
+            </Typography>
+          )}        
+      </Paper>
+      
+    </Box>
   );
 }
 
