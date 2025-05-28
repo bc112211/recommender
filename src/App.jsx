@@ -1,15 +1,22 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { Button, Box, Paper, Typography } from '@mui/material';
+import { Button, Box, Paper, Typography, TextField } from '@mui/material';
 
 function App() {
   const [activity, setActivity] = useState('');
   const [loading, setLoading] = useState(false);
+  const [location, setLocation] = useState('')
+  const [mood, setMood] = useState('')
+  const [numPeople, setNumPeople] = useState('')
 
   const getActivity = async () => {
     setLoading(true);
     try {
-      const response = await axios.post('/generate');
+      const response = await axios.post('/generate', {
+        location,
+        mood,
+        numPeople
+      });
       setActivity(response.data.activity);
     } catch (error) {
       setActivity("Try again later.");
@@ -37,22 +44,41 @@ function App() {
           flexDirection: 'column',
           p: 4,
           width: '500px',
+          gap: 2,
+          textAlign: 'center'
         }}
       >
         <Typography variant='h4'>
           Need something to do?
         </Typography>
+        <TextField
+          variant='outlined'
+          label='Location (Optional)'
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+        />
+        <TextField
+          variant='outlined'
+          label='Mood (Optional)'
+          value={mood}
+          onChange={(e) => setMood(e.target.value)}
+        />
+        <TextField
+          variant='outlined'
+          label='Num People (Optional)'
+          value={numPeople}
+          onChange={(e) => setNumPeople(e.target.value)}
+        />
           <Button 
             variant="outlined"
             size='large'
-            sx={{ mt: 2}}
             onClick={getActivity}>
               {loading ? "Thinking..." : "Surprise Me"}
           </Button>
           {activity && (
             <Typography
               variant='h6'
-              sx={{ mt: 2, color: 'text.secondary' }}
+              sx={{ color: 'text.secondary' }}
             >
               {activity}
             </Typography>

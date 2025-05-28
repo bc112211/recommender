@@ -9,12 +9,30 @@ app.use(express.json())
 
 
 app.post('/generate', async (req, res) => {
+  const { location, mood, numPeople } = req.body;
+
+  let prompt = 'Suggest a fun, spontaneous, physical activity someone could do. Keep it short and creative. This could be very random and try not to be basic.'
+
+  if (location) {
+    prompt += `Location is in ${location}`
+  }
+
+  if (mood) {
+    prompt += `They're feeling ${mood}`
+  }
+
+  if (numPeople) {
+    prompt += `There are ${numPeople} people`
+  }
+
+  prompt += ' Simply give brief description of activity. ~ 20 words'
+
   try {
     const response = await axios.post(
       'https://api.together.xyz/v1/chat/completions', 
       {
         model: 'meta-llama/Llama-Vision-Free',
-        messages: [{ role: 'user', content: 'Suggest a fun, spontaneous, physical activity someone could do. Keep it short and creative. This could be very random and try not to be basic. Simply give the activity'}],
+        messages: [{ role: 'user', content: prompt}],
         temperature: 0.9,
         max_tokens: 50,
       },
