@@ -1,1 +1,1 @@
-export const TOGETHER_API_KEY = '796717f261dbd91baa53cb872faef4d89d0ba8aa05ad54a9537c42c0bcfa2c68'
+export const TOGETHER_API_KEY = ''
